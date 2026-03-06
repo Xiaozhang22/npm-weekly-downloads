@@ -4,7 +4,7 @@ import { jsonResponse, refreshAllPackages } from '../_lib.js';
 export async function onRequestPost(context) {
   const { env } = context;
 
-  if (!env.NPM_DATA) {
+  if (!env["npm-week"]) {
     return jsonResponse({ error: 'KV not bound' }, 500);
   }
 

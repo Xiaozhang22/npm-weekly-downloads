@@ -12,18 +12,18 @@ import {
 export async function onRequestGet(context) {
   const { env } = context;
 
-  if (!env.NPM_DATA) {
+  if (!env["npm-week"]) {
     return jsonResponse({ error: 'KV not bound. Please bindNPM_DATA in Pages Settings.' }, 500);
   }
 
   const packages = await getPackageList(env);
-  let lastUpdated = await env.NPM_DATA.get('meta:last_updated');
+  let lastUpdated = await env["npm-week"].get('meta:last_updated');
 
   const data = {};
   let hasAnyData = false;
   await Promise.all(
     packages.map(async (pkg) => {
-      const raw = await env.NPM_DATA.get(`data:${pkg}`);
+      const raw = await env["npm-week"].get(`data:${pkg}`);
       if (raw) {
         data[pkg] = JSON.parse(raw);
         hasAnyData = true;
@@ -37,10 +37,10 @@ export async function onRequestGet(context) {
   if (!hasAnyData || isVeryStale(lastUpdated)) {
     // 无数据或超过 24 小时：同步刷新（首次访问会稍慢几秒）
     await refreshAllPackages(env);
-    lastUpdated = await env.NPM_DATA.get('meta:last_updated');
+    lastUpdated = await env["npm-week"].get('meta:last_updated');
     await Promise.all(
       packages.map(async (pkg) => {
-        const raw = await env.NPM_DATA.get(`data:${pkg}`);
+        const raw = await env["npm-week"].get(`data:${pkg}`);
         data[pkg] = raw ? JSON.parse(raw) : null;
       }),
     );
@@ -56,7 +56,7 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   const { env, request } = context;
 
-  if (!env.NPM_DATA) {
+  if (!env["npm-week"]) {
     return jsonResponse({ error: 'KV not bound' }, 500);
   }
 
@@ -79,8 +79,8 @@ export async function onRequestPost(context) {
   packages.push(name);
 
   await Promise.all([
-    env.NPM_DATA.put('config:packages', JSON.stringify(packages)),
-    env.NPM_DATA.put(`data:${name}`, JSON.stringify({ weeks })),
+    env["npm-week"].put('config:packages', JSON.stringify(packages)),
+    env["npm-week"].put(`data:${name}`, JSON.stringify({ weeks })),
   ]);
 
   return jsonResponse({ ok: true });
@@ -90,7 +90,7 @@ export async function onRequestPost(context) {
 export async function onRequestDelete(context) {
   const { env, request } = context;
 
-  if (!env.NPM_DATA) {
+  if (!env["npm-week"]) {
     return jsonResponse({ error: 'KV not bound' }, 500);
   }
 
@@ -107,8 +107,8 @@ export async function onRequestDelete(context) {
   packages.splice(index, 1);
 
   await Promise.all([
-    env.NPM_DATA.put('config:packages', JSON.stringify(packages)),
-    env.NPM_DATA.delete(`data:${name}`),
+    env["npm-week"].put('config:packages', JSON.stringify(packages)),
+    env["npm-week"].delete(`data:${name}`),
   ]);
 
   return jsonResponse({ ok: true });

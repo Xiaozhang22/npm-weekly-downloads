@@ -74,7 +74,7 @@ git push -u origin main
 2. 左侧菜单点击 **Workers & Pages**
 3. 点击 **KV** 标签页
 4. 点击 **Create a namespace**
-5. 名称填 `NPM_DATA`，点击 **Add**
+5. 名称填 `npm-week`（或其他你喜欢的名称），点击 **Add**
 6. 创建成功，记住这个名称，后续绑定用
 
 ---
@@ -118,8 +118,8 @@ https://npm-weekly-downloads.pages.dev
 
 | 配置项 | 值 |
 |--------|-----|
-| Variable name | `NPM_DATA` |
-| KV namespace | 选择第二步创建的 `NPM_DATA` |
+| Variable name | `npm-week` |
+| KV namespace | 选择第二步创建的 `npm-week` |
 
 7. 点击 **Save**
 
@@ -156,9 +156,9 @@ https://npm-weekly-downloads.pages.dev
 ## 操作完成后的检查清单
 
 - [ ] GitHub 仓库已创建，代码已上传
-- [ ] KV 命名空间 `NPM_DATA` 已创建
+- [ ] KV 命名空间 `npm-week` 已创建
 - [ ] Pages 项目已创建并连接 GitHub
-- [ ] KV 已绑定到 Pages Functions（Variable name = `NPM_DATA`）
+- [ ] KV 已绑定到 Pages Functions（Variable name = `npm-week`）
 - [ ] 绑定后已重新部署（Retry deployment）
 - [ ] 页面可正常访问，数据已加载
 - [ ] 自定义域名已绑定（可选）
@@ -171,7 +171,7 @@ https://npm-weekly-downloads.pages.dev
 |------|------|
 | 查看项目 | Workers & Pages → npm-weekly-downloads |
 | 查看部署日志 | 项目 → Deployments → 点击某次部署 |
-| 管理 KV 数据 | Workers & Pages → KV → NPM_DATA |
+| 管理 KV 数据 | Workers & Pages → KV → npm-week |
 | 修改 KV 绑定 | 项目 → Settings → Bindings |
 | 绑定自定义域名 | 项目 → Custom domains |
 | 查看 Functions 日志 | 项目 → Functions (beta) |

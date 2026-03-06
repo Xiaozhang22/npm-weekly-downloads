@@ -16,9 +16,9 @@ export function jsonResponse(data, status = 200) {
 }
 
 export async function getPackageList(env) {
-  const raw = await env.NPM_DATA.get('config:packages');
+  const raw = await env["npm-week"].get('config:packages');
   if (!raw) {
-    await env.NPM_DATA.put('config:packages', JSON.stringify(DEFAULT_PACKAGES));
+    await env["npm-week"].put('config:packages', JSON.stringify(DEFAULT_PACKAGES));
     return [...DEFAULT_PACKAGES];
   }
   return JSON.parse(raw);
@@ -63,10 +63,10 @@ export async function refreshAllPackages(env) {
     packages.map(async (pkg) => {
       const downloads = await fetchNpmDownloads(pkg);
       const weeks = groupByWeek(downloads);
-      await env.NPM_DATA.put(`data:${pkg}`, JSON.stringify({ weeks }));
+      await env["npm-week"].put(`data:${pkg}`, JSON.stringify({ weeks }));
     }),
   );
-  await env.NPM_DATA.put('meta:last_updated', new Date().toISOString());
+  await env["npm-week"].put('meta:last_updated', new Date().toISOString());
 }
 
 export function isStale(lastUpdated) {
