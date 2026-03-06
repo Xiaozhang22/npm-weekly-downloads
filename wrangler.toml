@@ -1,0 +1,4 @@
+# 仅用于本地开发（可选）
+# 实际部署通过 Cloudflare Dashboard 连接 GitHub 完成
+name = "npm-weekly-downloads"
+compatibility_date = "2024-09-23"
